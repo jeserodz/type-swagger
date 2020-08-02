@@ -70,11 +70,9 @@ var boxen_1 = __importStar(require("boxen"));
 var extract_zip_1 = __importDefault(require("extract-zip"));
 var client_1 = require("./client");
 var starter_1 = require("./starter");
-var tmpDir = process.cwd();
-var spinner = ora_1.default({ color: "cyan" }).start();
 yargs_1.default
     .command("generate <name> <specUrl>", "Generates new Swagger client SDK", {}, function (argv) { return __awaiter(void 0, void 0, void 0, function () {
-    var msg, msgBox, msg, msgBox, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock;
+    var msg, msgBox, msg, msgBox, tmpDir, spinner, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -95,6 +93,8 @@ yargs_1.default
                     console.error(msgBox);
                     process.exit(1);
                 }
+                tmpDir = process.cwd();
+                spinner = ora_1.default({ color: "cyan" }).start();
                 spinner.text = "Download and extract the starter project";
                 return [4 /*yield*/, starter_1.Starter.fetch(tmpDir)];
             case 1:
@@ -139,7 +139,7 @@ yargs_1.default
     });
 }); })
     .command("update <specUrl>", "Update existing Swagger client SDK", {}, function (argv) { return __awaiter(void 0, void 0, void 0, function () {
-    var msg, msgBox, msg, msgBox, starterSrcPath, clientZipPath;
+    var msg, msgBox, tmpDir, spinner, msg, msgBox, starterSrcPath, clientZipPath;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -149,6 +149,8 @@ yargs_1.default
                     console.error(msgBox);
                     process.exit(1);
                 }
+                tmpDir = process.cwd();
+                spinner = ora_1.default({ color: "cyan" }).start();
                 spinner.text = "Validate execution context";
                 if (!fs_1.default.existsSync(path_1.default.resolve(process.cwd(), "package.json"))) {
                     msg = chalk_1.default.redBright("Error - Invalid execution context. Could't validate Node package.");
