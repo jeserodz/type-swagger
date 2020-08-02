@@ -12,10 +12,6 @@ import extract from "extract-zip";
 import { Client } from "./client";
 import { Starter } from "./starter";
 
-const tmpDir = process.cwd();
-
-const spinner = ora({ color: "cyan" }).start();
-
 yargs
   .command("generate <name> <specUrl>", "Generates new Swagger client SDK", {}, async (argv) => {
     if (!validator.isURL(argv.specUrl as string)) {
@@ -38,6 +34,10 @@ yargs
       console.error(msgBox);
       process.exit(1);
     }
+
+    const tmpDir = process.cwd();
+
+    const spinner = ora({ color: "cyan" }).start();
 
     spinner.text = "Download and extract the starter project";
     const starterZipPath = await Starter.fetch(tmpDir);
@@ -77,6 +77,10 @@ yargs
       console.error(msgBox);
       process.exit(1);
     }
+
+    const tmpDir = process.cwd();
+
+    const spinner = ora({ color: "cyan" }).start();
 
     spinner.text = "Validate execution context";
     if (!fs.existsSync(path.resolve(process.cwd(), "package.json"))) {
