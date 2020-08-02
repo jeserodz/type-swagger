@@ -8,8 +8,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc",
-    "install": "npm run build"
+    "build": "npm run clean && tsc"
   },
   "author": "Jese",
   "license": "ISC",
