@@ -1,6 +1,16 @@
-# Swagger Client Generator
+# Type-Swagger 
 
-Generates a JavaScript/TypeScript HTTP client from a Swagger/OpenAPI spec.
+JavaScript/TypeScript HTTP client generator from a Swagger/OpenAPI spec.
+
+## Installation
+
+You can install the CLI tool locally or run it directly from NPM using `npx`.
+
+### With `NPX`
+`$ npx type-swagger generate <name> <specUrl>`
+
+### Local Installation
+`$ npm install -g type-swagger`
 
 ## Usage
 
@@ -8,7 +18,7 @@ Generates a JavaScript/TypeScript HTTP client from a Swagger/OpenAPI spec.
 
 Generate a new client SDK.
 
-`sgc generate <name> <specUrl>`
+`type-swagger generate <name> <specUrl>`
 
 - **name:** Name of the package to be used.
 - **specUrl:** URL of the Swagger spec in JSON format.
@@ -17,6 +27,6 @@ Generate a new client SDK.
 
 Update an existing client SDK.
 
-`sgc update <specUrl>`
+`type-swagger update <specUrl>`
 
 - **specUrl:** URL of the Swagger spec in JSON format.
