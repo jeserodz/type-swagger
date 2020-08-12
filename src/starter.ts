@@ -9,7 +9,7 @@ export const Starter = {
 
     let response = await axios({
       method: "GET",
-      url: "https://github.com/jeserodz/swagger-client-starter/archive/master.zip",
+      url: "https://github.com/jeserodz/type-swagger-starter/archive/master.zip",
       responseType: "stream",
     });
 

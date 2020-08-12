@@ -54,7 +54,7 @@ exports.Starter = {
                         writer = fs_1.default.createWriteStream(dest);
                         return [4 /*yield*/, axios_1.default({
                                 method: "GET",
-                                url: "https://github.com/jeserodz/swagger-client-starter/archive/master.zip",
+                                url: "https://github.com/jeserodz/type-swagger-starter/archive/master.zip",
                                 responseType: "stream",
                             })];
                     case 1:

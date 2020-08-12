@@ -72,7 +72,7 @@ var client_1 = require("./client");
 var starter_1 = require("./starter");
 yargs_1.default
     .command("generate <name> <specUrl>", "Generates new Swagger client SDK", {}, function (argv) { return __awaiter(void 0, void 0, void 0, function () {
-    var msg, msgBox, msg, msgBox, tmpDir, spinner, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock;
+    var msg, msgBox, msg, msgBox, tmpDir, spinner, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock, mainWorkflowPath;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -103,7 +103,7 @@ yargs_1.default
             case 2:
                 _a.sent();
                 spinner.text = "Rename the starter project dir";
-                starterExtractPath = path_1.default.resolve(tmpDir, "swagger-client-starter-master");
+                starterExtractPath = path_1.default.resolve(tmpDir, "type-swagger-starter-master");
                 starterDirPath = path_1.default.resolve(tmpDir, lodash_1.last(argv.name.split("/")));
                 fs_1.default.renameSync(starterExtractPath, starterDirPath);
                 spinner.text = "Download and extract swagger client into the starter project dir";
@@ -124,15 +124,20 @@ yargs_1.default
                 return [4 /*yield*/, fs_1.default.unlinkSync(clientZipPath)];
             case 7:
                 _a.sent();
-                spinner.text = "Rename starter package name";
+                spinner.text = "Update starter package.json";
                 starterPkgPath = path_1.default.resolve(starterDirPath, "package.json");
                 starterPkgLockPath = path_1.default.resolve(starterDirPath, "package-lock.json");
                 pkg = JSON.parse(fs_1.default.readFileSync(starterPkgPath, "utf-8"));
                 pkgLock = JSON.parse(fs_1.default.readFileSync(starterPkgLockPath, "utf-8"));
-                pkg.name = argv.name;
                 pkgLock.name = argv.name;
+                pkg.name = argv.name;
+                pkg.scripts.regenerate = "type-swagger update " + argv.specUrl;
                 fs_1.default.writeFileSync(starterPkgPath, JSON.stringify(pkg, null, 2));
                 fs_1.default.writeFileSync(starterPkgLockPath, JSON.stringify(pkgLock, null, 2));
+                spinner.text = "Enable GitHub Actions";
+                mainWorkflowPath = path_1.default.resolve(starterDirPath, ".github/workflows/main.yml.template");
+                fs_1.default.copyFileSync(mainWorkflowPath, mainWorkflowPath.replace(".template", ""));
+                fs_1.default.unlinkSync(mainWorkflowPath);
                 spinner.stop();
                 return [2 /*return*/];
         }

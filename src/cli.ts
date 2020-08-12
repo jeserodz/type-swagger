@@ -44,7 +44,7 @@ yargs
     await extract(starterZipPath, { dir: tmpDir });
 
     spinner.text = "Rename the starter project dir";
-    const starterExtractPath = path.resolve(tmpDir, "swagger-client-starter-master");
+    const starterExtractPath = path.resolve(tmpDir, "type-swagger-starter-master");
     const starterDirPath = path.resolve(tmpDir, last((argv.name as string).split("/")) as string);
     fs.renameSync(starterExtractPath, starterDirPath);
 
@@ -58,15 +58,21 @@ yargs
     await fs.unlinkSync(starterZipPath);
     await fs.unlinkSync(clientZipPath);
 
-    spinner.text = "Rename starter package name";
+    spinner.text = "Update starter package.json";
     const starterPkgPath = path.resolve(starterDirPath, "package.json");
     const starterPkgLockPath = path.resolve(starterDirPath, "package-lock.json");
     const pkg = JSON.parse(fs.readFileSync(starterPkgPath, "utf-8"));
     const pkgLock = JSON.parse(fs.readFileSync(starterPkgLockPath, "utf-8"));
-    pkg.name = argv.name;
     pkgLock.name = argv.name;
+    pkg.name = argv.name;
+    pkg.scripts.regenerate = `type-swagger update ${argv.specUrl}`;
     fs.writeFileSync(starterPkgPath, JSON.stringify(pkg, null, 2));
     fs.writeFileSync(starterPkgLockPath, JSON.stringify(pkgLock, null, 2));
+
+    spinner.text = "Enable GitHub Actions";
+    const mainWorkflowPath = path.resolve(starterDirPath, ".github/workflows/main.yml.template");
+    fs.copyFileSync(mainWorkflowPath, mainWorkflowPath.replace(".template", ""));
+    fs.unlinkSync(mainWorkflowPath);
 
     spinner.stop();
   })
