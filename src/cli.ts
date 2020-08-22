@@ -14,7 +14,7 @@ import { Starter } from "./starter";
 
 yargs
   .command("generate <name> <specUrl>", "Generates new Swagger client SDK", {}, async (argv) => {
-    if (!validator.isURL(argv.specUrl as string)) {
+    if (!validator.isURL(argv.specUrl as string, { require_tld: false })) {
       const msg = chalk.redBright(`Error - Invalid specUrl value: ${argv.specUrl}`);
       const msgBox = boxen(msg, { padding: 1, borderStyle: BorderStyle.Round });
       console.error(msgBox);
@@ -75,6 +75,10 @@ yargs
     fs.unlinkSync(mainWorkflowPath);
 
     spinner.stop();
+
+    const msg = chalk.greenBright(`Generated ${argv.name} from ${argv.specUrl}`);
+    const msgBox = boxen(msg, { padding: 1, borderStyle: BorderStyle.Round });
+    console.log(msgBox);
   })
   .command("update <specUrl>", "Update existing Swagger client SDK", {}, async (argv) => {
     if (!validator.isURL(argv.specUrl as string)) {
@@ -106,4 +110,8 @@ yargs
     await fs.unlinkSync(clientZipPath);
 
     spinner.stop();
+
+    const msg = chalk.blueBright(`Updated ${argv.name} from ${argv.specUrl}`);
+    const msgBox = boxen(msg, { padding: 1, borderStyle: BorderStyle.Round });
+    console.log(msgBox);
   }).argv;

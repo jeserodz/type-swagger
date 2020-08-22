@@ -72,14 +72,14 @@ var client_1 = require("./client");
 var starter_1 = require("./starter");
 yargs_1.default
     .command("generate <name> <specUrl>", "Generates new Swagger client SDK", {}, function (argv) { return __awaiter(void 0, void 0, void 0, function () {
-    var msg, msgBox, msg, msgBox, tmpDir, spinner, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock, mainWorkflowPath;
+    var msg_1, msgBox_1, msg_2, msgBox_2, tmpDir, spinner, starterZipPath, starterExtractPath, starterDirPath, starterSrcPath, clientZipPath, starterPkgPath, starterPkgLockPath, pkg, pkgLock, mainWorkflowPath, msg, msgBox;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!validator_1.default.isURL(argv.specUrl)) {
-                    msg = chalk_1.default.redBright("Error - Invalid specUrl value: " + argv.specUrl);
-                    msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
-                    console.error(msgBox);
+                if (!validator_1.default.isURL(argv.specUrl, { require_tld: false })) {
+                    msg_1 = chalk_1.default.redBright("Error - Invalid specUrl value: " + argv.specUrl);
+                    msgBox_1 = boxen_1.default(msg_1, { padding: 1, borderStyle: "round" /* Round */ });
+                    console.error(msgBox_1);
                     process.exit(1);
                 }
                 if (!validator_1.default.isURL(argv.name, {
@@ -88,9 +88,9 @@ yargs_1.default
                     require_tld: false,
                     require_valid_protocol: false,
                 })) {
-                    msg = chalk_1.default.redBright("Error - Invalid name value: " + argv.specUrl);
-                    msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
-                    console.error(msgBox);
+                    msg_2 = chalk_1.default.redBright("Error - Invalid name value: " + argv.specUrl);
+                    msgBox_2 = boxen_1.default(msg_2, { padding: 1, borderStyle: "round" /* Round */ });
+                    console.error(msgBox_2);
                     process.exit(1);
                 }
                 tmpDir = process.cwd();
@@ -139,28 +139,31 @@ yargs_1.default
                 fs_1.default.copyFileSync(mainWorkflowPath, mainWorkflowPath.replace(".template", ""));
                 fs_1.default.unlinkSync(mainWorkflowPath);
                 spinner.stop();
+                msg = chalk_1.default.greenBright("Generated " + argv.name + " from " + argv.specUrl);
+                msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
+                console.log(msgBox);
                 return [2 /*return*/];
         }
     });
 }); })
     .command("update <specUrl>", "Update existing Swagger client SDK", {}, function (argv) { return __awaiter(void 0, void 0, void 0, function () {
-    var msg, msgBox, tmpDir, spinner, msg, msgBox, starterSrcPath, clientZipPath;
+    var msg_3, msgBox_3, tmpDir, spinner, msg_4, msgBox_4, starterSrcPath, clientZipPath, msg, msgBox;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 if (!validator_1.default.isURL(argv.specUrl)) {
-                    msg = chalk_1.default.redBright("Error - Invalid specUrl value: " + argv.specUrl);
-                    msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
-                    console.error(msgBox);
+                    msg_3 = chalk_1.default.redBright("Error - Invalid specUrl value: " + argv.specUrl);
+                    msgBox_3 = boxen_1.default(msg_3, { padding: 1, borderStyle: "round" /* Round */ });
+                    console.error(msgBox_3);
                     process.exit(1);
                 }
                 tmpDir = process.cwd();
                 spinner = ora_1.default({ color: "cyan" }).start();
                 spinner.text = "Validate execution context";
                 if (!fs_1.default.existsSync(path_1.default.resolve(process.cwd(), "package.json"))) {
-                    msg = chalk_1.default.redBright("Error - Invalid execution context. Could't validate Node package.");
-                    msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
-                    console.error(msgBox);
+                    msg_4 = chalk_1.default.redBright("Error - Invalid execution context. Could't validate Node package.");
+                    msgBox_4 = boxen_1.default(msg_4, { padding: 1, borderStyle: "round" /* Round */ });
+                    console.error(msgBox_4);
                     process.exit(1);
                 }
                 spinner.text = "Download and extract swagger client into the starter project dir";
@@ -179,6 +182,9 @@ yargs_1.default
             case 4:
                 _a.sent();
                 spinner.stop();
+                msg = chalk_1.default.blueBright("Updated " + argv.name + " from " + argv.specUrl);
+                msgBox = boxen_1.default(msg, { padding: 1, borderStyle: "round" /* Round */ });
+                console.log(msgBox);
                 return [2 /*return*/];
         }
     });
