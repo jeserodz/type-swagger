@@ -24,7 +24,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "boxen": "^4.2.0",
     "chalk": "^4.1.0",
     "extract-zip": "^2.0.1",
